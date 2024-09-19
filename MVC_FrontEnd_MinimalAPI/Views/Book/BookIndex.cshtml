@@ -1,0 +1,63 @@
+﻿
+@model IEnumerable<BookDTO>
+
+<h1>Welcome to the library</h1>
+
+<p>These are the books we have </p>
+
+<div class="container mt-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <a asp-action="GetSingleBook" asp-controller="Book" asp-route-id="@item.ID" class="text-decoration-none text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <strong>@Html.DisplayFor(modelItem => item.Title)</strong>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            by @Html.DisplayFor(modelItem => item.Author)
+                        </h6>
+                        <p class="card-text">
+                            <strong>Genre:</strong> @Html.DisplayFor(modelItem => item.Genre) <br />
+                            <strong>Published:</strong> @Html.DisplayFor(modelItem => item.Publiced)
+                        </p>
+                        <p class="card-text">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </p>
+                    </div>
+                    </a>
+                    <div class="card-footer mt-auto d-flex justify-content--between align-items-center">
+                        <div class="d-flex align-items-center">
+                            @if(item.Available == true)
+                            {
+                                <p class="card-text text-success small d-flex align-items-center mb-0">
+                                 <i class="bi bi-check-circle-fill me-1"></i><strong>Available</strong>
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="card-text text-danger small d-flex align-items-center mb-0">
+                                  <i class="bi bi-x-circle-fill me-1"></i><strong>Not Available</strong>
+                                </p>
+                          }
+                     </div>
+                     <div class="ms-auto">
+                     <a asp-action="UpdateBook" asp-route-id="@item.ID" class="btn btn-primary btn-sm">
+                          Edit
+                     </a>
+                     <a asp-action="DeleteBook" asp-route-id="@item.ID" class="btn btn-danger btn-sm">
+                          Delete
+                     </a>
+                     </div>
+                </div>
+
+            </div>
+        </div>
+        }
+    </div>
+    <a asp-action="CreateBook" class="btn btn-success btn-outline mt-4">
+        Add Book <i class="bi bi-plus" style="color: white;"></i>
+    </a>
+</div>
