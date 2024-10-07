@@ -26,6 +26,13 @@ namespace MinimalAPI_Anrop_till_aspNet_Rasmus
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionToDB")));
 
+
+            //Add CORS
+            builder.Services.AddCors((setup) => setup.AddPolicy("default", (options) => 
+            {
+                options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+            }));
+
             builder.Services.AddScoped<IBookRepository, BookRepository>();
 
             var app = builder.Build();
@@ -36,6 +43,7 @@ namespace MinimalAPI_Anrop_till_aspNet_Rasmus
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors("default");
 
             app.UseHttpsRedirection();
 
